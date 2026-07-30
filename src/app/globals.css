@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8faf8;
+  --foreground: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #0f5c2e;
+  --primary-dark: #063d1e;
+  --primary-light: #7cb342;
+  --primary-accent: #a3d977;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.satellite-map {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(163, 217, 119, 0.38) 0 5%, transparent 14%),
+    radial-gradient(circle at 76% 18%, rgba(124, 179, 66, 0.35) 0 7%, transparent 18%),
+    radial-gradient(circle at 68% 78%, rgba(238, 202, 116, 0.2) 0 5%, transparent 16%),
+    linear-gradient(35deg, rgba(6, 61, 30, 0.35), rgba(15, 92, 46, 0.2)),
+    repeating-linear-gradient(34deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 28px),
+    repeating-linear-gradient(112deg, rgba(6, 61, 30, 0.16) 0 1px, transparent 1px 36px),
+    linear-gradient(145deg, #28451e, #6a7330 35%, #243d22 67%, #789456);
+}
+
+.terrain-outline {
+  clip-path: polygon(36% 6%, 58% 18%, 77% 47%, 61% 68%, 51% 88%, 30% 80%, 20% 62%, 27% 43%, 25% 24%);
+}
+
+.map-contours {
+  background:
+    repeating-radial-gradient(ellipse at 48% 48%, rgba(17, 24, 39, 0.24) 0 1px, transparent 1px 10px),
+    linear-gradient(135deg, #f1f5f1, #dbe9dc);
+}
+
+.map-slope {
+  background:
+    radial-gradient(circle at 24% 70%, #1d8f47 0 13%, transparent 24%),
+    radial-gradient(circle at 55% 48%, #d7d64c 0 15%, transparent 26%),
+    radial-gradient(circle at 78% 23%, #f59e0b 0 10%, transparent 22%),
+    linear-gradient(135deg, #77c35a, #d6e951 42%, #f9783f);
+}
+
+.map-sun {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.4), transparent 18%),
+    linear-gradient(135deg, #ef7d32 0 38%, #f3c85e 38% 56%, #4fa3b8 56% 100%);
+}
+
+.map-ndvi {
+  background:
+    radial-gradient(circle at 35% 52%, #0f7a34 0 15%, transparent 27%),
+    radial-gradient(circle at 71% 33%, #7cb342 0 14%, transparent 24%),
+    linear-gradient(135deg, #174f2c, #59a947 58%, #b6d16f);
+}
+
+.map-fire {
+  background:
+    radial-gradient(circle at 70% 42%, #dc2626 0 13%, transparent 24%),
+    radial-gradient(circle at 35% 66%, #f97316 0 16%, transparent 28%),
+    linear-gradient(135deg, #f7e58e, #f59e0b 42%, #ef4444);
+}
+
+.map-flood {
+  background:
+    radial-gradient(circle at 32% 64%, rgba(255, 255, 255, 0.45), transparent 16%),
+    linear-gradient(135deg, #c7e9f8, #60a5fa 52%, #1d4ed8);
+}
+
+.map-landuse {
+  background:
+    linear-gradient(135deg, #6aa84f 0 24%, #b6d16f 24% 45%, #8fbc8f 45% 65%, #b79ac8 65% 100%);
+}
+
+.soil-texture {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.2) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.16) 0 3px, transparent 4px),
+    radial-gradient(circle at 42% 72%, rgba(0, 0, 0, 0.18) 0 3px, transparent 4px),
+    linear-gradient(135deg, #7a4b2b, #b47a49 52%, #5f3922);
+}
+
+.topo-plan {
+  background:
+    repeating-radial-gradient(ellipse at 50% 56%, rgba(17, 24, 39, 0.22) 0 1px, transparent 1px 8px),
+    linear-gradient(135deg, #ffffff, #eef2ee);
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
+
+.leaflet-control-zoom {
+  overflow: hidden;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 8px rgba(17, 24, 39, 0.12) !important;
+}
+
+.leaflet-control-zoom a {
+  border-color: #e5e7eb !important;
+  color: #111827 !important;
+  font-weight: 800;
+}
+
+.suelgeo-marker-shell {
+  background: transparent;
+  border: 0;
+}
+
+.suelgeo-price-marker {
+  display: inline-flex;
+  min-width: 104px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #111827;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 9px 10px;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.22);
+}
+
+.suelgeo-price-marker::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  border-radius: 999px;
+  background: #0f5c2e;
+}
+
+.suelgeo-price-marker.is-selected {
+  border-color: #a3d977;
+  background: #ffffff;
+  color: #063d1e;
+  box-shadow: 0 0 0 3px rgba(163, 217, 119, 0.55), 0 12px 28px rgba(17, 24, 39, 0.26);
+}
+
+.suelgeo-pin-marker {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  background: #0f5c2e;
+  box-shadow: 0 0 0 4px rgba(163, 217, 119, 0.55), 0 8px 18px rgba(17, 24, 39, 0.3);
+}
