@@ -41,4 +41,5 @@ export type TerrainResult = {
   }[];
   visualClassName: string;
   imageUrl?: string;
+  imageUrls?: string[];
 };
