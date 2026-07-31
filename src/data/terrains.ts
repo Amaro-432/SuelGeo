@@ -85,6 +85,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "accesibilidad",
       title: "Accesibilidad",
       description: draft.elevation,
+      detailDescription:
+        "Revision del acceso al predio y su relacion con caminos interiores, cercania a vias existentes y factibilidad de ingreso para vehiculos livianos o maquinaria. Esta lectura ayuda a estimar costos de habilitacion y comodidad de uso diario.",
+      metrics: [
+        { label: "Ubicacion", value: draft.location },
+        { label: "Superficie", value: draft.area },
+        { label: "Uso potencial", value: draft.potentialUse },
+      ],
       visualClassName: "map-contours",
       imageUrl: draft.resultImages?.accesibilidad,
     },
@@ -92,6 +99,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "topografia",
       title: "Topografia",
       description: draft.elevation,
+      detailDescription:
+        "Lectura general del relieve del predio para entender cotas, lomajes, sectores altos y zonas de menor pendiente. Sirve como base para planificar accesos, obras menores, manejo de aguas y ubicacion de futuras intervenciones.",
+      metrics: [
+        { label: "Cota", value: draft.elevation },
+        { label: "Terreno", value: draft.area },
+        { label: "Comuna", value: draft.commune },
+      ],
       visualClassName: "map-contours",
       imageUrl: draft.resultImages?.topografia,
     },
@@ -99,6 +113,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "pendientes",
       title: "Pendientes",
       description: draft.slope,
+      detailDescription:
+        "Analisis orientado a identificar sectores aptos para transito, cultivo, construccion liviana o conservacion. Las pendientes ayudan a anticipar costos de habilitacion, erosion y accesibilidad interna.",
+      metrics: [
+        { label: "Pendiente", value: draft.slope },
+        { label: "Uso recomendado", value: draft.potentialUse },
+        { label: "Superficie", value: draft.area },
+      ],
       visualClassName: "map-slope",
       imageUrl: draft.resultImages?.pendientes,
     },
@@ -106,6 +127,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "solana",
       title: "Solana y Umbria",
       description: draft.sun,
+      detailDescription:
+        "Evaluacion de exposicion solar y zonas de sombra para estimar potencial agricola, confort termico, disponibilidad de luz y ubicacion de sectores productivos o habitacionales.",
+      metrics: [
+        { label: "Exposicion", value: draft.sun },
+        { label: "Potencial", value: draft.potentialUse },
+        { label: "Region", value: draft.region },
+      ],
       visualClassName: "map-sun",
       imageUrl: draft.resultImages?.solana,
     },
@@ -113,6 +141,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "ndvi",
       title: "Vegetacion (NDVI)",
       description: draft.ndvi,
+      detailDescription:
+        "Revision de vigor vegetacional para reconocer sectores con cobertura activa, praderas, cultivos, matorral o posibles areas degradadas. Ayuda a estimar estado productivo y manejo del predio.",
+      metrics: [
+        { label: "Vegetacion", value: draft.ndvi },
+        { label: "Uso actual", value: draft.landUse },
+        { label: "Suelo", value: draft.soil },
+      ],
       visualClassName: "map-ndvi",
       imageUrl: draft.resultImages?.ndvi,
     },
@@ -120,6 +155,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "incendio",
       title: "Riesgo de Incendio",
       description: draft.fire,
+      detailDescription:
+        "Identificacion de sectores con mayor exposicion a combustible vegetal, laderas, bordes de matorral y condiciones que pueden requerir cortafuegos o manejo preventivo.",
+      metrics: [
+        { label: "Riesgo", value: draft.fire },
+        { label: "Cobertura", value: draft.ndvi },
+        { label: "Pendiente", value: draft.slope },
+      ],
       visualClassName: "map-fire",
       imageUrl: draft.resultImages?.incendio,
     },
@@ -127,6 +169,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "inundacion",
       title: "Riesgo de Inundacion",
       description: draft.flood,
+      detailDescription:
+        "Lectura referencial de acumulacion de agua, cercania a cursos superficiales y zonas bajas. Es util para decidir emplazamientos, drenajes y restricciones de uso.",
+      metrics: [
+        { label: "Riesgo", value: draft.flood },
+        { label: "Topografia", value: draft.elevation },
+        { label: "Curvas", value: draft.contour },
+      ],
       visualClassName: "map-flood",
       imageUrl: draft.resultImages?.inundacion,
     },
@@ -134,6 +183,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "uso-suelo",
       title: "Uso de Suelo",
       description: draft.landUse,
+      detailDescription:
+        "Sintesis del uso predominante observado y su compatibilidad con el potencial del terreno. Permite comparar aptitud agricola, recreacional, habitacional o de conservacion.",
+      metrics: [
+        { label: "Uso predominante", value: draft.landUse },
+        { label: "Uso potencial", value: draft.potentialUse },
+        { label: "Superficie", value: draft.area },
+      ],
       visualClassName: "map-landuse",
       imageUrl: draft.resultImages?.["uso-suelo"],
     },
@@ -142,6 +198,13 @@ function makeResults(draft: TerrainDraft): TerrainResult[] {
       id: "plano-topografico",
       title: "Plano Topografico",
       description: draft.contour,
+      detailDescription:
+        "Representacion planimetrica referencial para revisar curvas de nivel, forma del predio y lectura de pendientes. Sirve como apoyo para informes y decisiones de terreno.",
+      metrics: [
+        { label: "Curvas de nivel", value: draft.contour },
+        { label: "Cota", value: draft.elevation },
+        { label: "Area", value: draft.area },
+      ],
       visualClassName: "topo-plan",
       imageUrl: draft.resultImages?.["plano-topografico"],
     },
@@ -165,8 +228,8 @@ export const terrains: Terrain[] = [
     price: "$500.000.000",
     priceValue: 500000000,
     location: "Pichidegua, Region de O'Higgins",
-    area: "5,2 ha",
-    areaValue: 5.2,
+    area: "8,4 ha",
+    areaValue: 8.4,
     potentialUse: "Agricola",
     description:
       "Terreno rural con lomajes suaves, apto para uso agricola, habitacional o recreacional. Buen acceso por camino interior y cercania a servicios basicos.",

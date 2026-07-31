@@ -34,6 +34,11 @@ export type TerrainResult = {
   id: string;
   title: string;
   description: string;
+  detailDescription?: string;
+  metrics?: {
+    label: string;
+    value: string;
+  }[];
   visualClassName: string;
   imageUrl?: string;
 };

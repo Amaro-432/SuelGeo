@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowLeft, Heart, LandPlot, Leaf, Ruler } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { TerrainAnalysisDetail } from "@/components/terrain/TerrainAnalysisDetail";
 import { TerrainImagePanel } from "@/components/terrain/TerrainImagePanel";
 import { TerrainResultCard } from "@/components/terrain/TerrainResultCard";
 import { TerrainSubmenu } from "@/components/terrain/TerrainSubmenu";
@@ -11,12 +13,15 @@ import { cn } from "@/lib/utils";
 import { useTerrainStore } from "@/store/terrain-store";
 
 export function TerrainDetailView() {
+  const [activeSectionId, setActiveSectionId] = useState("resumen");
   const selectedTerrainId = useTerrainStore((state) => state.selectedTerrainId);
   const favoriteIds = useTerrainStore((state) => state.favoriteIds);
   const setView = useTerrainStore((state) => state.setView);
   const toggleFavorite = useTerrainStore((state) => state.toggleFavorite);
   const terrain = terrains.find((item) => item.id === selectedTerrainId) ?? terrains[0];
   const isFavorite = favoriteIds.includes(terrain.id);
+  const activeResult = terrain.results.find((result) => result.id === activeSectionId);
+  const isSummarySection = activeSectionId === "resumen" || !activeResult;
 
   return (
     <div className="p-4 xl:p-6">
@@ -59,15 +64,25 @@ export function TerrainDetailView() {
         </div>
 
         <div className="grid lg:grid-cols-[300px_minmax(0,1fr)]">
-          <TerrainSubmenu />
-          <div className="grid gap-5 bg-[#F8FAF8] p-5 2xl:grid-cols-[minmax(0,1fr)_440px]">
+          <TerrainSubmenu
+            activeSectionId={isSummarySection ? "resumen" : activeSectionId}
+            availableResultIds={terrain.results.map((result) => result.id)}
+            onSelectSection={setActiveSectionId}
+          />
+           <div className="grid gap-5 bg-[#F8FAF8] p-5 2xl:grid-cols-[minmax(0,1fr)_360px]">
             <section>
-              <h2 className="mb-5 text-2xl font-black text-[#111827]">Resumen General del Terreno</h2>
-              <div className="grid gap-5 md:grid-cols-2">
-                {terrain.results.map((result) => (
-                  <TerrainResultCard key={result.id} result={result} />
-                ))}
-              </div>
+              {isSummarySection ? (
+                <>
+                  <h2 className="mb-5 text-2xl font-black text-[#111827]">Resumen General del Terreno</h2>
+                  <div className="grid gap-5 md:grid-cols-2">
+                    {terrain.results.map((result) => (
+                      <TerrainResultCard key={result.id} result={result} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <TerrainAnalysisDetail result={activeResult} />
+              )}
             </section>
             <TerrainImagePanel />
           </div>

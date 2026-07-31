@@ -16,21 +16,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTerrainStore } from "@/store/terrain-store";
+import type { TerrainResult } from "@/types/terrain";
 
 const menuItems = [
-  { label: "Resumen General", icon: Layers, active: true },
-  { label: "Analisis del Terreno", icon: LineChart },
-  { label: "Topografia", icon: Mountain },
-  { label: "Pendientes", icon: Route },
-  { label: "Exposicion Solar (Solana y Umbria)", icon: Sun },
-  { label: "Vegetacion (NDVI)", icon: Leaf },
-  { label: "Riesgo de Incendio", icon: Flame },
-  { label: "Riesgo de Inundacion", icon: Droplets },
-  { label: "Uso de Suelo", icon: Sprout },
-  { label: "Plano Topografico", icon: MapPinned },
+  { id: "resumen", label: "Resumen General", icon: Layers },
+  { id: "accesibilidad", label: "Accesibilidad", icon: LineChart },
+  { id: "topografia", label: "Topografia", icon: Mountain },
+  { id: "pendientes", label: "Pendientes", icon: Route },
+  { id: "solana", label: "Exposicion Solar (Solana y Umbria)", icon: Sun },
+  { id: "ndvi", label: "Vegetacion (NDVI)", icon: Leaf },
+  { id: "incendio", label: "Riesgo de Incendio", icon: Flame },
+  { id: "inundacion", label: "Riesgo de Inundacion", icon: Droplets },
+  { id: "uso-suelo", label: "Uso de Suelo", icon: Sprout },
+  { id: "plano-topografico", label: "Plano Topografico", icon: MapPinned },
 ];
 
-export function TerrainSubmenu() {
+type TerrainSubmenuProps = {
+  activeSectionId: string;
+  availableResultIds: TerrainResult["id"][];
+  onSelectSection: (sectionId: string) => void;
+};
+
+export function TerrainSubmenu({ activeSectionId, availableResultIds, onSelectSection }: TerrainSubmenuProps) {
   const showNotice = useTerrainStore((state) => state.showNotice);
 
   return (
@@ -38,13 +45,19 @@ export function TerrainSubmenu() {
       <nav className="grid gap-1">
         {menuItems.map((item) => {
           const Icon = item.icon;
+          const isAvailable = item.id === "resumen" || availableResultIds.includes(item.id);
+          const isActive = activeSectionId === item.id;
+
           return (
             <button
               className={cn(
                 "flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold text-[#111827] transition hover:bg-[#EEF6EA]",
-                item.active && "bg-[#EAF5E4] text-[#063D1E]",
+                isActive && "bg-[#EAF5E4] text-[#063D1E]",
+                !isAvailable && "cursor-not-allowed opacity-45 hover:bg-transparent",
               )}
+              disabled={!isAvailable}
               key={item.label}
+              onClick={() => onSelectSection(item.id)}
               type="button"
             >
               <Icon className="h-4 w-4 shrink-0" />
